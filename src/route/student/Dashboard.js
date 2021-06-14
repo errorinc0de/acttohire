@@ -4,13 +4,14 @@ import Sidebar from './components/Sidebar'
 import { db, firebasevalue, timestamp } from '../../firebase'
 import { useAuth } from '../../context/AuthProvider'
 import { ToastContainer, toast } from 'react-toastify';
-// import './styles/dashboard.css'
+import './styles/dashboard.css' 
 function Dashboard() {
 
   const {currentUser} = useAuth()
 
   const [topics,setTopics]=useState()
   const [loading,setLoading]=useState(false)
+  const [error,setError]=useState(false)
   const [selectedTopic, setSelectedTopic] =useState(null)
   const [availableJobsCount,setAvailableJobsCount] = useState(0)
   const [appliedJobsCount,setAppliedJobsCount] = useState(0)
@@ -76,6 +77,13 @@ function Dashboard() {
     e.preventDefault()
 
     setLoading(true)
+
+    if(!selectedTopic)
+    {
+      setError(true)
+      setLoading(false)
+      return
+    }
     db.collection("posts").add({
       post : postRef.current.value,
       topic:selectedTopic,
@@ -145,7 +153,7 @@ function Dashboard() {
         <Container fluid className="dashboard-body">
           <Row noGutters>
             <Col lg={1} className="p-0">
-              <Sidebar />
+          <Sidebar />
             </Col>
             <Col lg={11} className="m-body">
                 <div className="page-header">
@@ -184,7 +192,7 @@ function Dashboard() {
                   <Row>
                     <Form onSubmit={postNow}>
                       <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control as="textarea" rows={7} placeholder="what's your today's activity ?" ref={postRef} />
+                        <Form.Control as="textarea" rows={7} placeholder="what's your today's activity ?" ref={postRef} required/>
                       </Form.Group>
                       <Form.Group controlId="formgender">
                         <Form.Label>Topic</Form.Label>
@@ -196,11 +204,12 @@ function Dashboard() {
                               </Button>
                             )
                           })}
+                          {error && (<div className="error">Please select a topic </div>)}
                         </div>
                       </Form.Group>
                       <Form.Group controlId="formBasicEmail" >
                         <Form.Label>Keywords</Form.Label>
-                        <Form.Control type="text" placeholder="html,css,js" ref={keywordsRef} />
+                        <Form.Control type="text" placeholder="html,css,js" ref={keywordsRef} required />
                       </Form.Group>
                             <Button variant="primary" disabled ={loading} className="theme-btn" type="submit">
                               {loading?(
@@ -214,6 +223,16 @@ function Dashboard() {
                              </Button>  
                     </Form>
                   </Row>
+                  <div className="bio-holder">
+                            <h4>My posts </h4>
+                            {posts && posts.length>0 && posts.map((post)=>{
+                                    return (<div className="post-container">
+                                        <p>{post.post}</p>
+                                        <h6>{post.topic}</h6>
+                                        <h5>{post.addedOn && post.addedOn.toDate().toString().substring(0,15)}</h5>
+                                    </div>)
+                                })}
+                </div>
                 </Container>
                 <ToastContainer
                   position="bottom-right"
@@ -226,18 +245,10 @@ function Dashboard() {
                   draggable
                   pauseOnHover
                   />
-                <div className="bio-holder">
-                            <h4>My posts </h4>
-                            {posts && posts.length>0 && posts.map((post)=>{
-                                    return (<div className="post-container">
-                                        <p>{post.post}</p>
-                                        <h6>{post.topic}</h6>
-                                        <h5>{post.addedOn && post.addedOn.toDate().toString().substring(0,15)}</h5>
-                                    </div>)
-                                })}
-                </div>
+                
             </Col>
           </Row>
+          
         </Container>
     )
 }

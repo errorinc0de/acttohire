@@ -1,21 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Row,Container, Col,Image, Button, Form,Spinner } from 'react-bootstrap'
 import Sidebar from './components/Sidebar'
-import dp from '../../img/demo.jpg'
 import './styles/profile.css'
 import { useAuth } from '../../context/AuthProvider'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenAlt, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import './styles/awards.css'
 import './styles/profile.css'
-import { db } from '../../firebase'
+import { db, storageRef } from '../../firebase'
 import './styles/profile.css'
  function Profile() {
 
     const [editBio,setEditBio] = useState(false)
     const [loading,setLoading]= useState(false)
+    const [dp,setDp]=useState("https://jacksimonvineyards.com/wp-content/uploads/2016/05/mplh.jpg")
     const {currentUser} = useAuth()
     const bioRef= useRef()
+    const fileRef=useRef()
 
     function updateBio(e)
     {
@@ -28,6 +29,28 @@ import './styles/profile.css'
             setLoading(false)
         })
     }
+    function changeImage(e)
+    {
+        console.log(e.target.files)
+
+        storageRef.child(e.target.files[0].name).put(e.target.files[0]).then(()=>{
+            storageRef.child(e.target.files[0].name).getDownloadURL().then((url) => {
+                db.collection("users").doc(currentUser.uid).update({
+                    photoURL:url
+                })
+            })
+        })
+    }
+
+    useEffect(() => {
+        if(currentUser && currentUser.uid)
+        {
+            if(currentUser.photoURL)
+                setDp(currentUser.photoURL)
+            else
+                setDp("https://jacksimonvineyards.com/wp-content/uploads/2016/05/mplh.jpg")
+        }
+    }, [currentUser])
 
      return ( 
         <Container fluid className="dashboard-body">
@@ -42,7 +65,14 @@ import './styles/profile.css'
                 <Container className="my4">
                     <Row>
                         <Col lg={2}  md={3} xs={6}>
-                            <Image src={dp} fluid roundedCircle />
+                            <Image src={dp} fluid roundedCircle onClick={()=>fileRef.current.click()}/>
+                            <Form.File 
+                                id="custom-file"
+                                className="hidden"
+                                ref={fileRef}
+                                onChange={(e)=>changeImage(e)}
+                                accept="image/*"
+                            />
                             {currentUser && currentUser.isHired ? (<div className="hired-div"><FontAwesomeIcon icon={faUserTie} />   Hired</div>):(<div className="unhired-div"><FontAwesomeIcon icon={faUserTie} /> Avialable for hire</div>)}
                         </Col>
                         <Col>

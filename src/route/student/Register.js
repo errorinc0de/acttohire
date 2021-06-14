@@ -85,11 +85,12 @@ function Register() {
             var collegeId = collegeList.filter(college=>college.displayName === CollegeRef.current.value)
             register(email,password,name,CollegeRef.current.value,rollRef.current.value,univRollRef.current.value,graduationDateRef.current.value,sex,collegeId[0].id).then(()=>{
                         }).then(()=>{
-                           history.push("/dashboard").catch((error)=>{
+                           history.push("/dashboard")
+                        })
+                        .catch((error)=>{
                 setError(error.message)
             })
-        })
-    }
+        }
     }
 
 
@@ -106,7 +107,12 @@ function Register() {
             {
                 var collegeListArr = []
                 docs.forEach((doc)=>{
-                    collegeListArr.push({id:doc.id,...doc.data()})
+                    var today = new Date()
+                    if(doc.data().expireDate)
+                    {
+                        if(today <= doc.data().expireDate.toDate())
+                            collegeListArr.push({id:doc.id,...doc.data()})
+                    }
                 })
                 setCollegeList(collegeListArr)
             }

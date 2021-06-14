@@ -53,7 +53,7 @@ function College_login() {
                         <div className="login-description">
                             <div className="brand">B-Plan</div>
                             <h1>Welcome to your world of success !!</h1>
-                            <p>Join our network to keep track of your fellow classmates and let them know who you are ! . Recruiters always have their eyes on you :) </p>
+                            <p>Join our network to keep track of your students and let them shine :) </p>
 
                             <div className="login-down">
                                 <h3>Don't have an account ?</h3>

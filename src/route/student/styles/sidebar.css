@@ -5,8 +5,8 @@
     text-align: center;
     margin:0px ;
     margin-left: -12px;
-    width:100% !important;
     margin-top: auto;
+    width:100%
 }
 .dashboard-body
 {
@@ -104,6 +104,9 @@
     .sidebar
     {
         width: 100%;
+        z-index:9999;
+        background-color: lightcoral;
+        height:auto
     }
     .brand-sidebar,
     .brand-sidebar-verticle,
@@ -113,7 +116,7 @@
     }
     .sidebar-container
     {
-        z-index: 99999;
+        z-index: 999999;
         margin-left: 0px !important;
         margin-bottom: 0;
         position: fixed;
@@ -124,7 +127,11 @@
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
         overflow: hidden;
-        background-color: #fff;
+        background-color: #fff !important;
+    }
+    .sidebar-container li , .sidebar-container a
+    {
+        background-color: #fff !important;
     }
     .sidebar-container a
     {

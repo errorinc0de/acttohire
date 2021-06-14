@@ -107,11 +107,7 @@ function College_subscription() {
                         <h4>Subscribe to secure your student future !!</h4>
                         <h3>RS.5000/-</h3>
                         <p>
-                            This is a simple hero unit, a simple jumbotron-style component for calling
-                            extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling
-                            extra attention to featured content or.This is a simple hero unit, a simple jumbotron-style component for calling
-                            extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling
-                            extra attention to featured content or information.
+                            Join our network for a minimal subscription fee of Rs 5000 and let your students come to the spotlight of dream companies . Boost and Boast your hiring records by providing the correct data of student activities throughout their academic life to a pool of HRs who are waiting to take the best talents they find . Come up and take a step further to make their future brighter . 
                         </p>
                         </div>
                         <Container fluid>

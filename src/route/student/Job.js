@@ -5,10 +5,11 @@ import { useAuth } from '../../context/AuthProvider'
 import { db } from '../../firebase'
 import Sidebar from './components/Sidebar'
 import './styles/awards.css' 
+import NothingToShow from '../../components/NothingToShow'
 function Job() {
 
-    const [jobList,setJobList] =useState()
-    const [filteredJobList,setFilteredJobList] =useState()
+    const [jobList,setJobList] =useState([])
+    const [filteredJobList,setFilteredJobList] =useState([])
 
     const {currentUser} = useAuth()
 
@@ -88,6 +89,7 @@ function Job() {
                                 </Container></Link>
                             )
                         })}
+                        {filteredJobList && filteredJobList.length < 1 && (<NothingToShow />)}
             </Col>
             </Row>
         </Container>

@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Row,Container, Col,Image, Button, Form,Spinner,Tabs,Tab } from 'react-bootstrap'
-import Sidebar from './components/Sidebar'
-import dp from '../../img/demo.jpg'
 import { Link } from 'react-router-dom';
 import './styles/profile.css'
 import { useAuth } from '../../context/AuthProvider'
@@ -10,7 +8,7 @@ import { faPenAlt, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import './styles/awards.css'
 import './styles/profile.css'
 import { db } from '../../firebase'
-import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import './styles/profile.css'
 import './styles/dashboard.css'
 
@@ -18,16 +16,11 @@ import { useParams } from 'react-router'
 
  function ProfileDesc() {
 
+    const [dp,setDp]=useState("https://jacksimonvineyards.com/wp-content/uploads/2016/05/mplh.jpg")
     const {profileid} = useParams()
     const [profile,setProfile]=useState()
     const [posts,setPosts]=useState([])
     const [awardsList,setAwardsList]=useState([])
-
-
-
-
-
-
     const [data , setData] =useState(null)
     const [leaderBoard,setLeaderBoard]=useState(null)
     const [finalLeaderBoard,setFinalLeaderBoard]=useState(null)
@@ -38,10 +31,14 @@ import { useParams } from 'react-router'
     const [selectedTopic ,setSelectedTopic] = useState(null)
     const [currentprofile ,setCurrentProfile] = useState()
 
+    const fileRef =useRef()
+
     useEffect(()=>{
         var unsubscribe =db.collection("users").doc(profileid).onSnapshot((docs)=>{
             setCurrentProfile (docs.data())
         })
+
+        return unsubscribe
     },[profileid])
       const options = {
         responsive: true,
@@ -79,6 +76,11 @@ import { useParams } from 'react-router'
 
             }
             setTopics(topicList)
+
+            if(currentprofile.photoURL)
+            {
+                setDp(currentprofile.photoURL)
+            }
         }
     },[currentprofile])
 
@@ -336,7 +338,6 @@ import { useParams } from 'react-router'
     
         return unsubscribe
       },[])
-
      return ( 
         <Container fluid className="dashboard-body">
           <Row noGutters>
