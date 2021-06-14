@@ -1,0 +1,48 @@
+.subscription
+{
+    min-height: 100vh;
+}
+.subscription-bg 
+{
+    background-image: url("../../../img/bg.jpg");
+    background-size: cover;
+    background-position:center;
+}
+.subscription-desc h3
+{
+    color:var(--theme2);
+    font-weight:bold;
+}
+
+.subscription-desc
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+.subscription-desc h2
+{
+    font-weight: bold;
+    font-size: 100px;
+    opacity:0.1
+}
+
+.subscription-desc h5
+{
+    font-weight: bold;
+    font-size: 60px;
+    opacity:0.1
+}
+
+.subscription-desc h4
+{
+    margin-top: -50px;
+}
+
+.subscription-desc h3 span
+{
+    font-size: 14px;
+}

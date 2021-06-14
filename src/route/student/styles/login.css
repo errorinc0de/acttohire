@@ -1,0 +1,174 @@
+.login-container
+{
+    min-height:100vh;
+    background-color: #0D1238;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("https://i0.wp.com/onaircode.com/wp-content/uploads/2019/09/css3-gradient.jpg?resize=1024%2C588&ssl=1");
+}
+.login-holder
+{
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0px 0px 50px  rgba(0,0,0,0.6);
+}
+.login-down
+{
+    margin-top: 150px;
+}
+.login-pattern-container
+{
+    background-image: url("https://i.pinimg.com/originals/6f/7d/f1/6f7df1c3255ba1f488792e5a415ec01c.jpg");
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: 100% 100%;
+    border-bottom-right-radius:40px ;
+    border-top-right-radius:40px ;
+    box-shadow: 0px 0px 20px  rgba(0,0,0,0.6);
+}
+.login-description
+{
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    width: 70%;
+    padding: 40px;
+    color:#fff;
+    border-radius: 20px;
+}
+.brand
+{
+    background-color: rgba(0,0,0,0.4);
+    width: fit-content;
+    padding: 00px 30px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    line-height:40px ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-description h1
+{
+    font-size: 22px;
+    font-weight: normal;
+}
+.login-description p
+{
+    opacity: 0.9;
+    letter-spacing: 0.8px;
+    font-size: 12px;
+    margin:20px 0px
+}
+.login-description h3
+{
+    font-size: 16px;
+}
+.login-form-container
+{
+    padding:20px 0px;
+    width:70%;
+}
+.login-form-container h2
+{
+    font-size: 50px;
+    font-weight: bold;
+}
+.form-group
+{
+    margin:20px 0px
+}
+.theme-btn
+{
+    width: 100%;
+    background-color: #0D1238 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-form input[type="text"]
+{
+    width: 100% !important;
+}
+.progress-holder
+{
+    display: flex;
+    padding:0px ;
+    margin:10px 0px
+}
+.progress-holder li
+{
+    list-style: none;
+    height:30px;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: rgb(190, 190, 190);
+    border-radius: 50%;
+    margin-right: 40px;
+}
+.progress-holder li:first-child:after
+{
+    content: '';
+    position: absolute;
+    width:40px;
+    margin-top: 15px;
+    margin-left: 11px;
+    border-bottom: 1px solid #0D1238;
+}
+.login-form-top
+{
+    display: flex;
+}
+.error
+{
+    color:rgb(170, 28, 28);
+    padding-left:20px;
+}
+.styled-radio
+{
+    background-color: #ffffff !important;
+    border:1px solid #0D1238 !important;
+    border-radius: 20px !important;
+    margin:10px 5px;
+    font-size: 12px !important;
+}
+.styled-radio-selected
+{
+    background-color: #0D1238 !important;
+    color:#fff !important
+}
+@media all and (max-width: 480px) {
+    .login-down
+    {
+        margin-top: 10px;
+    }
+    .login-description
+    {
+        width:100%;
+        padding: 30px;
+    }
+    .login-form-container
+    {
+        margin:30px 0px;
+    }
+    .login-holder
+    {
+        height: 100vh;
+        border-radius: 0px !important;
+    }
+    .login-description h1
+    {
+        font-size: 18px;
+    }
+    .login-pattern-container
+    {
+        border-bottom-left-radius: 40px;
+        border-top-right-radius: 0px;
+    }
+}   
+.pointer{
+    cursor:grab;
+}

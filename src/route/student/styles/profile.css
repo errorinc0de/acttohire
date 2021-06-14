@@ -1,0 +1,66 @@
+.profile-container h2
+{
+    font-size: 40px !important;
+    font-weight: bold;
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    opacity: 0.4;
+}
+.profile-container h3
+{
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 35px !important;
+}
+
+.unhired-div 
+{
+    font-weight: bold;
+    font-size: 10px;
+    width: fit-content;
+    margin:10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: green;
+    text-align: center;
+    color:#fff;
+
+}
+.hired-div
+{
+    font-weight: bold;
+    font-size: 10px;
+    width: fit-content;
+    margin:10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: var(--theme2);
+    text-align: center;
+    color:#fff;
+}
+.profile-tags
+{
+    color: #fff;
+    background-color: var(--theme1);
+    padding: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 20px;
+}
+.bio-holder
+{
+    padding: 10px;
+}
+.bio-holder h4
+{
+    font-size: 40px;
+    font-weight:bold;
+    opacity: 0.6;
+}
+.bio-holder p
+{
+    opacity: 0.8;
+}

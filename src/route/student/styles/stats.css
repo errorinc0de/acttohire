@@ -1,0 +1,22 @@
+.pie-chart
+{
+    height:250px !important;
+}
+.monthly-chat
+{
+    height:250px !important;
+}
+.stats-container
+{
+    display: flex;
+    flex-direction: column;
+    margin:10px 0px
+}
+.stats-container h3
+{
+    opacity: 0.4;
+    color:#AEAEAE;
+    font-weight: bold;
+    margin:20px auto;
+    font-size: 28px;
+}

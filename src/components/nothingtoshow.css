@@ -1,0 +1,19 @@
+.nothing-to-show
+{
+    margin:10px ;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.nothing-to-show h6
+{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0.3;
+}
+.nothing-to-show img
+{
+    max-width: 350px;
+}

@@ -1,0 +1,41 @@
+.post-container
+{
+    margin:10px;
+}
+.post-container p
+{
+    opacity:0.8;
+}
+
+.post-container h6
+{
+    background-color:var(--theme1) ;
+    font-weight: bold;
+    font-size: 10px !important; 
+    color:#fff;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 20px;
+}
+
+.post-container h5
+{
+    text-align: right !important;
+    font-weight:bold;
+    width:100% !important;
+    opacity: 0.4;
+}
+
+.post-container span
+{
+    color:var(--theme2) !important;
+    font-weight:bold;
+    font-size: 10px;
+}
+
+.post-container h3
+{
+    font-weight: bold;
+    font-size:26px;
+    text-transform: capitalize;
+}

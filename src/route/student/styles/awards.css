@@ -1,0 +1,46 @@
+.award-container
+{
+    background-color: #fff;
+    padding: 30px;
+    margin:10px 0px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    position: relative;
+}
+.award-container h3
+{
+    font-size: 18px;
+}
+.award-container p
+{
+    font-size: 14px;
+    opacity: 0.8;
+}
+.award-container h4
+{
+    font-size: 15px;
+}
+.award-container h5
+{
+    font-size: 15px;
+}
+.award-container h5 span , .award-container h4 span ,.award-container h3 span
+{
+    color:#6231EE !important;
+    font-weight: bold;
+    font-size: 12px;
+}
+.external-link
+{
+    position: absolute;
+    right: 0;
+    background-color: #6231EE;
+    color:#fff !important;
+    height:30px;
+    width: 30px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius:10px ;
+}

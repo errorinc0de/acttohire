@@ -1,0 +1,10 @@
+.quota-limit-alert {
+    padding: 8px;
+    background-color: rgba(255, 117, 117, 0.61);
+    border: 2px solid red;
+    border-radius: 10px;
+}
+.modal-90w
+{
+    width:90vw !important
+}
