@@ -123,16 +123,25 @@ function HrSubscription() {
                                 <h5>Silver</h5>
                                 <div className="p-3">
                                 <h4>Subscribe to Silver membership !! </h4>
-                                <h3>RS. 5000/<span>month</span></h3>
+                                <h3>RS. 5000 /<span>month</span></h3>
                                 <p>
-                                    This is a simple hero unit, a simple jumbotron-style component for calling
-                                    extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling
-                                    extra attention to featured content or.This is a simple hero unit, a simple jumbotron-style component for calling
-                                    extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling
-                                    extra attention to featured content or information.
+                                    Are you a startup?
+                                    <br />
+                                    We recommend this pack for you to watch out for the best talents from the institutions. Subscribe to our Silver tier and enjoy the following benefits ; )
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <ul className="justify-content-center">
+                                        <li>Retrieve 50 students' data</li>
+                                        <li>Make offer to available students</li>
+                                        <li>Keep an eye on student activity-profile</li>
+                                        <li>Keep track of active posted jobs</li>
+                                        <li>Keep track of past posted jobs</li>
+                                        <li>Handle job's activity/inactivity status</li>
+                                    </ul>
                                 </p>
-                                </div>
-                                <Button variant="primary" className="theme-btn" onClick={()=>pay(500000,50,"Silver")}>Subscribe Now !</Button>
+                            </div>
+                            <Button variant="primary" className="theme-btn" onClick={()=>pay(500000,50,"Silver")}>Subscribe Now !</Button>
                                         
                             
                             </div>
@@ -142,13 +151,22 @@ function HrSubscription() {
                                     <h5>Gold</h5>
                                     <div className="p-3">
                                     <h4>Subscribe to Gold <br></br> membership !!</h4>
-                                    <h3>RS. 10000/<span>month</span></h3>
+                                    <h3>RS. 10000 /<span>month</span></h3>
                                     <p>
-                                        This is a simple hero unit, a simple jumbotron-style component for calling
-                                        extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling
-                                        extra attention to featured content or.This is a simple hero unit, a simple jumbotron-style component for calling
-                                        extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling
-                                        extra attention to featured content or information.
+                                        Looking to accelerate your organization's turn-over? Looking for best candidates who can make you achieve the goals?
+                                        <br />
+                                        We recommend this pack for you to watch out for the best talents from the institutions. Subscribe to our Gold tier and enjoy the following benefits ; )
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <ul className="justify-content-center">
+                                            <li>Retrieve 200 students' data</li>
+                                            <li>Make offer to available students</li>
+                                            <li>Keep an eye on student activity-profile</li>
+                                            <li>Keep track of active posted jobs</li>
+                                            <li>Keep track of past posted jobs</li>
+                                            <li>Handle job's activity/inactivity status</li>
+                                        </ul>
                                     </p>
                                     </div>
                                    
@@ -162,11 +180,22 @@ function HrSubscription() {
                                     <h5>Platinum</h5>
                                     <div className="p-3">
                                     <h4>Subscribe to Platinum membership !!</h4>
-                                    <h3>RS. 20000/<span>month</span></h3>
+                                    <h3>RS. 20000 /<span>month</span></h3>
                                     <p>
-                                        This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-
-
+                                        We understand the workforce your company needs to achieve client deadlines. Meet your organization's requirements through this pack!
+                                        <br />
+                                        We recommend this pack for you to track the best talents from the institutions. Subscribe to our Platinum tier and enjoy the following benefits ; )
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <ul className="justify-content-center">
+                                            <li>Retrieve 500 students' data</li>
+                                            <li>Make offer to available students</li>
+                                            <li>Keep an eye on student activity-profile</li>
+                                            <li>Keep track of active posted jobs</li>
+                                            <li>Keep track of past posted jobs</li>
+                                            <li>Handle job's activity/inactivity status</li>
+                                        </ul>
                                     </p>
                                     </div>
                                     

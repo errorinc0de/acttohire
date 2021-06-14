@@ -1,4 +1,4 @@
-import { faCogs, faFileDownload, faSignOutAlt, faTable, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faCogs, faFileDownload, faSignOutAlt, faTable, faUserTie, faAtom } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React,{useEffect} from 'react'
 import { Button } from 'react-bootstrap'
@@ -36,6 +36,10 @@ function Sidebar() {
                 <NavLink activeClassName="selected-nav" to="/hr-dashboard"><li>
                     <FontAwesomeIcon icon={faTable}/> 
                     <span>Dashboard</span>
+                </li></NavLink>
+                <NavLink activeClassName="selected-nav" to="/hr-offers"><li>
+                    <FontAwesomeIcon icon={faAtom}/> 
+                    <span>Offers</span>
                 </li></NavLink>
                 <NavLink activeClassName="selected-nav" to="/hr-jobs"><li>
                     <FontAwesomeIcon icon={faUserTie}/> 

@@ -86,3 +86,17 @@ a
 {
     opacity: 0 !important;
 }
+
+.status {
+    position: absolute;
+    right: 20px;
+    margin-left: auto;
+}
+
+.status .success {
+    color: green !important;
+}
+
+.status .failure {
+    color: red !important;
+}

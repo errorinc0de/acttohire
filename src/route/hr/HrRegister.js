@@ -68,7 +68,7 @@ function HrRegister() {
         else
         {
             hrRegister(email,password,name,company,countryRef.current.value,stateRef.current.value,contactRef.current.value).then(()=>{    
-            }).then(()=>history.push('/hr-dashboard')).catch((error)=>{
+            }).then(()=>history.push('/hr-subscription')).catch((error)=>{
                 setError(error.message)
             })
         }

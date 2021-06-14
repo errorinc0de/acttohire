@@ -36,6 +36,7 @@ import Student_settings from './route/student/Student_settings';
 import Stats from './route/student/Stats';
 import ProfileDesc from './route/student/ProfileDesc';
 import HrJobDet from './route/hr/HrJobDet';
+import HrOffers from './route/hr/HrOffers'
 function App() {
   return (
     <>
@@ -56,6 +57,7 @@ function App() {
             <HrPrivateRoute exact path="/hr-dashboard" component={HrDashboard}></HrPrivateRoute>
             <HrPrivateRoute exact path="/hr-settings" component={HrSettings}></HrPrivateRoute>
             <HrPrivateRoute exact path="/hr-jobs/:jobid" component={HrJobDet}></HrPrivateRoute>
+            <HrPrivateRoute exact path="/hr-offers" component={HrOffers}></HrPrivateRoute>
             
             <CollegePrivateRoute exact path="/college-dashboard" component={CollegeDashboard}></CollegePrivateRoute>
             <CollegePrivateRoute exact path="/college-subscription" component={College_subscription} ></CollegePrivateRoute>

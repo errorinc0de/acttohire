@@ -1,6 +1,6 @@
-import { Button, Form, Modal, Row } from 'react-bootstrap'
-import React, { useEffect, useRef, useState } from 'react'
-import { db, firebasevalue } from '../../../firebase'
+import { Button, Form, Modal } from 'react-bootstrap'
+import React, { useRef, useState } from 'react'
+import { db, firebasevalue, timestamp } from '../../../firebase'
 import { useAuth } from "../../../context/AuthProvider"
 import '../styles/downloadData.css'
 
@@ -23,11 +23,16 @@ function MakeOffer(props) {
     function handleMakeOffer(event){
         event.preventDefault();
         setLoading(true);
-        db.collection("users").doc(props.data.id).update({
-            offers: firebasevalue.arrayUnion({
-                company: currentUser.company,
-                email: currentUser.email,
-                name: currentUser.displayName,
+        db.collection("users").doc(currentUser.uid).update({
+            sentOffers: firebasevalue.arrayUnion({
+                candidateName: props.data.name,
+                candidateId: props.data.id,
+                candidateEmail: props.data.email,
+                candidateTopic: props.data.topic,
+                hrId: currentUser.uid,
+                hrCompany: currentUser.company,
+                hrEmail: currentUser.email,
+                hrName: currentUser.displayName,
                 description: ResponsibilityRef.current.value,
                 title: TitleRef.current.value,
                 role: RoleRef.current.value,
@@ -35,7 +40,30 @@ function MakeOffer(props) {
                 duration: DurationRef.current.value,
                 location: LocationRef.current.value,
                 payscale: PayscaleRef.current.value,
-                responsibility: ResponsibilityRef.current.value
+                isAccepted: false,
+                actionTaken: false
+            })
+        }).catch(()=>{setLoading(false)})
+
+        db.collection("users").doc(props.data.id).update({
+            offers: firebasevalue.arrayUnion({
+                candidateName: props.data.name,
+                candidateId: props.data.id,
+                candidateEmail: props.data.email,
+                candidateTopic: props.data.topic,
+                hrId: currentUser.uid,
+                hrCompany: currentUser.company,
+                hrEmail: currentUser.email,
+                hrName: currentUser.displayName,
+                description: ResponsibilityRef.current.value,
+                title: TitleRef.current.value,
+                role: RoleRef.current.value,
+                code: JobCodeRef.current.value,
+                duration: DurationRef.current.value,
+                location: LocationRef.current.value,
+                payscale: PayscaleRef.current.value,
+                isAccepted: false,
+                actionTaken: false
             })
         }).then(()=>{
             props.onHide();
@@ -56,7 +84,7 @@ function MakeOffer(props) {
                     </Form.Group>
                     <Form.Group controlId="RoleId" className="my-3">
                         <Form.Label>Role</Form.Label>
-                        <Form.Control as="select" className="form-field" custom placeholder="Enter Job Title" className="mx-3" ref={RoleRef} required>
+                        <Form.Control as="select" className="form-field" placeholder="Enter Job Title"  ref={RoleRef} required>
                             <option value = "Full-Time">Full-Time</option>
                             <option value = "Part-Time">Part-Time</option>
                             <option value = "Internship">Internship</option>
@@ -84,15 +112,14 @@ function MakeOffer(props) {
                         <Form.Control as="textarea" rows={5} placeholder="Enter Job Description" ref={ResponsibilityRef}/>
                     </Form.Group>
                     <div className="d-flex justify-content-center">
-                        <Button type="submit" variant="primary" className="my-4 px-3" disabled={loading}>
+                        <Button type="submit" variant="primary" className="px-3" disabled={loading}>
                             Send
                         </Button>
-                        <Button variant="danger" className="my-4 mx-3 px-3" onClick={handleClose}>
+                        <Button variant="danger" className="mx-3 px-3" onClick={handleClose}>
                             Close
                         </Button>
                     </div>
                 </Form>
-                {console.log(props.data)}
             </Modal.Body>
         </Modal>
     )

@@ -98,7 +98,8 @@ function login(email, password) {
             contact,
             studentData:[],
             isHr:true,
-            quota:0
+            quota:0,
+            sentOffers: []
           }).then(()=>{
             resolve()
           })
