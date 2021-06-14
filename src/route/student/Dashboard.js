@@ -5,6 +5,8 @@ import { db, firebasevalue, timestamp } from '../../firebase'
 import { useAuth } from '../../context/AuthProvider'
 import { ToastContainer, toast } from 'react-toastify';
 import './styles/dashboard.css' 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 function Dashboard() {
 
   const {currentUser} = useAuth()
@@ -149,6 +151,75 @@ function Dashboard() {
     return unsubscribe
   },[])
 
+
+  function acceptOffer(offerDet)
+  {
+    db.collection("users").doc(offerDet.hrId).update({
+      sentOffers:firebasevalue.arrayRemove(offerDet)
+    }).then(()=>{
+
+      db.collection("users").doc(offerDet.hrId).update({
+        sentOffers:firebasevalue.arrayUnion({
+          candidateName: offerDet.candidateName,
+            candidateId: offerDet.candidateId,
+            candidateEmail: offerDet.candidateEmail,
+            candidateTopic: offerDet.candidateTopic,
+            hrId: offerDet.hrId,
+            hrCompany: offerDet.hrCompany,
+            hrEmail: offerDet.hrEmail,
+            hrName: offerDet.hrName,
+            description: offerDet.description,
+            title: offerDet.title,
+            role: offerDet.role,
+            code: offerDet.code,
+            duration: offerDet.duration,
+            location: offerDet.location,
+            payscale: offerDet.payscale,
+            isAccepted: true,
+            actionTaken: true
+        })
+      }).then(()=>{
+        db.collection("users").doc(currentUser.uid).update({
+          isHired:true,
+          offers:firebasevalue.arrayRemove(offerDet)
+        })
+      })
+    })
+  }
+
+  function rejectOffer(offerDet)
+  {
+      db.collection("users").doc(offerDet.hrId).update({
+        sentOffers:firebasevalue.arrayRemove(offerDet)
+      }).then(()=>{
+        db.collection("users").doc(offerDet.hrId).update({
+          sentOffers:firebasevalue.arrayUnion({
+            candidateName: offerDet.candidateName,
+            candidateId: offerDet.candidateId,
+            candidateEmail: offerDet.candidateEmail,
+            candidateTopic: offerDet.candidateTopic,
+            hrId: offerDet.hrId,
+            hrCompany: offerDet.hrCompany,
+            hrEmail: offerDet.hrEmail,
+            hrName: offerDet.hrName,
+            description: offerDet.description,
+            title: offerDet.title,
+            role: offerDet.role,
+            code: offerDet.code,
+            duration: offerDet.duration,
+            location: offerDet.location,
+            payscale: offerDet.payscale,
+            isAccepted: false,
+            actionTaken: true
+          })
+        }).then(()=>{
+          db.collection("users").doc(currentUser.uid).update({
+            offers:firebasevalue.arrayRemove(offerDet)
+          })  
+        })
+      })
+  }
+
     return (
         <Container fluid className="dashboard-body">
           <Row noGutters>
@@ -188,6 +259,53 @@ function Dashboard() {
                     
                   </Row>
                 </Container>
+                <Container fluid>
+                  <Row>
+                    {currentUser && currentUser.offers.length > 0 &&(
+                      <div className="bio-holder">
+                        <h4>New Offers </h4>
+                      </div>
+                    )}
+                  </Row>
+                </Container>
+                {currentUser && currentUser.offers.length > 0 && currentUser.offers.map((offer)=>{
+                  return(
+                    <Container fluid>
+                      <Row>
+                        <Col lg={12}>
+                            <div className="award-container">
+                                <Row>
+                                  <Col md={6}>
+                                    <h3>{offer.title} <span>#{offer.code}</span></h3>
+                                    <h4>By : <span> {offer.hrCompany}</span></h4>
+                                    <h5>Location : <span>{offer.location}</span></h5>
+                                    <h5>Duration : <span>{offer.duration}</span></h5>
+                                    <p>{offer.description}</p>
+                                    <div className="job-details">
+                                    <h6>Payscale<br /><span>Rs. {offer.payscale} /-</span></h6>
+                                  </div>
+                                  </Col>
+                                  <Col md={6} className="d-flex flex-column align-items-end justify-content-center">
+                                  <div className="queries-container border-0">
+                                      <div className="queries">
+                                          <h6>For Queries :</h6>
+                                          <h5>{offer.hrName}</h5>
+                                          <h4>{offer.hrEmail}</h4>
+                                      </div>
+                                      <div className="offer-btn">
+                                      <Button variant="success" onClick={()=>acceptOffer(offer)} ><FontAwesomeIcon icon={faCheck} /></Button>
+                                      <Button variant="danger" onClick={()=>rejectOffer(offer)} ><FontAwesomeIcon icon={faTimes} /></Button>
+                                      </div>
+                                  </div>
+                                  </Col>
+                                </Row>
+                            </div>
+                        </Col>
+                      </Row>
+                    </Container>  
+                  )
+                })
+              }
                 <Container fluid>
                   <Row>
                     <Form onSubmit={postNow}>
