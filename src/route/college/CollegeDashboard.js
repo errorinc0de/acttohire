@@ -72,7 +72,7 @@ function CollegeDashboard() {
         topics.forEach((topic)=>{
           var count = 0;
           users.forEach((user)=>{
-            if(user.topicList.indexOf(topic) !== -1)
+            if(user.topicList?.indexOf(topic) !== -1)
             {
               count++;
             }

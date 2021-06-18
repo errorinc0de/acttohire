@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import './styles/dashboard.css' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 function Dashboard() {
 
   const {currentUser} = useAuth()
@@ -220,6 +221,24 @@ function Dashboard() {
       })
   }
 
+  function removeNoti(noti)
+  {
+    db.collection("users").doc(currentUser.uid).update({
+      notification : firebasevalue.arrayRemove(noti)
+    }).then(()=>
+    {
+      toast.success('Notification deleted ! ', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+    })
+  }
+
     return (
         <Container fluid className="dashboard-body">
           <Row noGutters>
@@ -261,14 +280,14 @@ function Dashboard() {
                 </Container>
                 <Container fluid>
                   <Row>
-                    {currentUser && currentUser.offers.length > 0 &&(
+                    {currentUser && currentUser.offers?.length > 0 &&(
                       <div className="bio-holder">
                         <h4>New Offers </h4>
                       </div>
                     )}
                   </Row>
                 </Container>
-                {currentUser && currentUser.offers.length > 0 && currentUser.offers.map((offer)=>{
+                {currentUser && currentUser.offers?.length > 0 && currentUser.offers.map((offer)=>{
                   return(
                     <Container fluid>
                       <Row>
@@ -303,6 +322,39 @@ function Dashboard() {
                         </Col>
                       </Row>
                     </Container>  
+                  )
+                })
+              }
+                <Container fluid>
+                  <Row>
+                    {currentUser && currentUser.notification?.length > 0 &&(
+                      <div className="bio-holder">
+                        <h4>New Notification </h4>
+                      </div>
+                    )}
+                  </Row>
+                </Container>
+                {currentUser && currentUser.notification?.length > 0 && currentUser.notification.map((noti)=>{
+                  return(
+                    <Link to ={`/job/${noti.jobId}`}><Container fluid>
+                      <Row>
+                        <Col lg={12}>
+                            <div className="award-container">
+                                <Row>
+                                  <Col md={11}>
+                                    <h3>{noti.jobTitle} <span>#{noti.jobId}</span></h3>
+                                  </Col>
+                                  <Col md={1}>
+                                  <div className="offer-btn">
+                                      <Button variant="light text-danger" onClick={()=>removeNoti(noti)} ><FontAwesomeIcon icon={faTimes} /></Button>
+                                      </div>
+                                  </Col>
+                                </Row>
+                            </div>
+                            
+                        </Col>
+                      </Row>
+                    </Container></Link>  
                   )
                 })
               }
@@ -347,7 +399,7 @@ function Dashboard() {
                                     return (<div className="post-container">
                                         <p>{post.post}</p>
                                         <h6>{post.topic}</h6>
-                                        <h5>{post.addedOn && post.addedOn.toDate().toString().substring(0,15)}</h5>
+                                        <h5>{post.addedOn && post.addedOn?.toDate().toString().substring(0,15)}</h5>
                                     </div>)
                                 })}
                 </div>

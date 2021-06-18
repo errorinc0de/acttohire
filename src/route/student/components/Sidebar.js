@@ -21,13 +21,15 @@ function Sidebar() {
       }
 
     useEffect(() => {
-
         if(currentUser && currentUser.uid)
         {
             if(!currentUser.isStudent)
                 handleLogout()
+        }else
+        {
+            handleLogout()
         }
-    }, [currentUser])
+    }, [])
     return (
         <div className="sidebar">
             <div className="brand-sidebar">Activity to hiring</div>

@@ -17,8 +17,12 @@ function Stats() {
     const [topics , setTopics] = useState(null)
     const [selectedTopic ,setSelectedTopic] = useState(null)
     const [posts,setPosts]=useState([])
+    const [yearFilters,setYearFilters] = useState()
+    const [selectedYear,setSelectedYear] = useState()
+    const [yearData,setYearData] = useState(null)
 
     const {currentUser} = useAuth()
+
       const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -32,6 +36,7 @@ function Stats() {
           ],
         },
       };
+
       const pieoptions = {
         responsive: true,
         maintainAspectRatio: false,
@@ -69,9 +74,6 @@ function Stats() {
                 chartLabel.push(currentUser.topics[key].label)
                 chartData.push(currentUser.topics[key].count)
             }
-
-            console.log(chartLabel)
-            console.log(chartData)
             const data = {
                 labels:chartLabel,
                 datasets: [
@@ -112,17 +114,19 @@ function Stats() {
                 monthLabel.push(i+1+" "+monthlist[month])
               }
 
-              db.collection("posts").where("author.uid","==",currentUser.uid).onSnapshot((docs)=>{
+              db.collection("posts").where("author.uid","==",currentUser.uid).onSnapshot((docs)=>{    
+                console.log(docs)
+                
                 var currentmonthData = new Array(daysInMonth).fill(0)
-                if(!docs.empty)
+                console.log(typeof docs)
+                if(!docs.empty && (typeof docs === "object"))
                 {
                     docs.forEach((doc)=>{
-                        if(doc.data() !== null)
+                        if(doc.data() !== null && (typeof doc.data() === "object"))
                         {
-                            if(doc.data().addedOn.toDate().getMonth() === month)
+                            if(doc.data().addedOn?.toDate().getMonth() === month)
                             {
-                              console.log(doc.data().addedOn.toDate().getDate())
-                              currentmonthData[doc.data().addedOn.toDate().getDate()-1] +=1
+                              currentmonthData[doc.data().addedOn?.toDate().getDate()-1] +=1
                             }
                         }
                     })
@@ -131,9 +135,9 @@ function Stats() {
 
                 for (const key in currentUser.awards)
                 {
-                    if(currentUser.awards[key].addedOn.toDate().getMonth() === month)
+                    if(currentUser.awards[key].addedOn?.toDate().getMonth() === month)
                       {
-                          currentmonthData[currentUser.awards[key].addedOn.toDate().getDate()-1] +=1
+                          currentmonthData[currentUser.awards[key].addedOn?.toDate().getDate()-1] +=1
                      }
                 }
 
@@ -199,7 +203,6 @@ function Stats() {
               };
 
               setAwards(awarddata)
-
 
         }
     },[currentUser])
@@ -279,9 +282,85 @@ function Stats() {
       }
     },[leaderBoard])
 
+
+    
+
     function CellFormatter(cell, row) {
       return (<div><Link to={"/profile/"+row.uid}>{cell}</Link></div>);
     }
+
+
+ 
+    useEffect(() => {
+      if(currentUser && currentUser.uid)
+      {
+        setYearFilters([parseInt(currentUser.gradDate.substring(0,4))-3,parseInt(currentUser.gradDate.substring(0,4))-2,parseInt(currentUser.gradDate.substring(0,4))-1,parseInt(currentUser.gradDate.substring(0,4))])
+        var dt = new Date();
+        var year = dt.getFullYear();
+        setSelectedYear(year)
+      }
+    }, [currentUser])
+
+
+    useEffect(() => {
+
+
+      var unsubscribe = db.collection("posts").where("author.uid","==",currentUser.uid).onSnapshot((docs)=>{ 
+
+        var topicsList = currentUser.topicList
+
+        var dataset=[]
+
+        var bgcolor = [
+          'rgb(20,36,89)',
+          'rgb(255,8,80)',
+          'rgb(239,126,50)',
+          'rgb(192,35,35)',
+          'rgb(25,169,121)',
+          'rgb(255,204,0)',
+          'rgb(239,139,44)',
+          'rgb(162,184,108)',
+          'rgb(2,163,139)',
+          'rgb(163, 2, 96)',
+        ]
+
+        topicsList.forEach((topic)=>{
+          var data = new Array(12).fill(0)
+
+          for (var month = 1 ; month <= 12 ; month++)
+          {
+              docs.forEach((doc)=>{
+                var docMonth =doc.data().addedOn.toDate().getMonth()
+                var docYear =doc.data().addedOn.toDate().getFullYear()
+                if(docMonth === month && doc.data().topic ===topic && docYear===selectedYear) 
+                {
+                  data[month-1] += 1
+                }
+              })
+          }
+          const index = Math.floor(Math.random()*bgcolor.length);
+
+          dataset.push({label:topic,data:data,backgroundColor:bgcolor[index]})
+
+            bgcolor.splice(index, 1);
+          
+
+        })
+
+        const data = {
+          labels: ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"],
+          datasets: dataset
+        };
+  
+        setYearData(data)
+
+      })
+      
+      
+
+      return unsubscribe
+
+    }, [selectedYear])
 
 
     return (
@@ -295,18 +374,43 @@ function Stats() {
                    My Stats
                 </div>
                 <Container>
-                    <Row className="d-flex align-items-center justify-content-center">
+                    <Row>
+                        <Col lg={12} className="stats-container">
+                            <h3>Year chart</h3>
+                            <Form.Label>Year Filter</Form.Label>
+                            <div className="ml-1">
+                                {yearFilters && yearFilters.length>0 && yearFilters.map((year,key)=>{
+                                    return(
+                                    <Button variant="light" className={selectedYear === year?("styled-radio styled-radio-selected mr-2"):("styled-radio mr-3")} key={key} onClick={()=>{setSelectedYear(year)}}>
+                                        {year}
+                                    </Button>
+                                    )
+                                })}
+                            </div>
+                        </Col>
+                        <Col lg={12} className="monthly-chat">
+                            <Bar data={yearData} options={options}/>
+                        </Col>
+                      
+
                         <Col lg={12} className="stats-container">
                             <h3>Monthly chart</h3>
-                            <Bar data={monthlyData} options={options}  className="monthly-chat" />
+                            <div className="monthly-chat">
+                              <Bar data={monthlyData} options={options} />
+                            </div>
                         </Col>
-                        <Col lg={4} className="stats-container">
+                        <Col lg={6} className="stats-container">
                             <h3>Topic Chart</h3>
-                            <Pie data={data} className="pie-chart" options={pieoptions} />
+                            <div className="pie-chart">
+                              <Pie data={data} options={pieoptions} />
+                            </div>
+                            
                         </Col>
-                        <Col lg={4} className="stats-container">
+                        <Col lg={6} className="stats-container">
                             <h3>Award/Achievement Chart</h3>
-                            <Pie data={awards} className="pie-chart"options={pieoptions} />
+                            <div className="pie-chart">
+                              <Pie data={awards} options={pieoptions} />
+                            </div>
                         </Col>
                     </Row>
                     <Row>
@@ -339,7 +443,7 @@ function Stats() {
                       return (<div className="post-container">
                           <p>{post.post}</p>
                           <h6>{post.topic}</h6>
-                          <h5>{post.addedOn.toDate().toString().substring(0,15)}</h5>
+                          <h5>{post.addedOn?.toDate().toString().substring(0,15)}</h5>
                       </div>)
                     })}
                     </Row>

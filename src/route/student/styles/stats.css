@@ -1,16 +1,21 @@
 .pie-chart
 {
-    height:250px !important;
+    height:30vh !important;
 }
 .monthly-chat
 {
-    height:250px !important;
+    height:40vh !important;
+    position: relative;
+    display: block;
+    margin:20px 0px
 }
 .stats-container
 {
     display: flex;
     flex-direction: column;
-    margin:10px 0px
+    margin:10px 0px ;
+    align-items: center;
+    justify-content: center;
 }
 .stats-container h3
 {

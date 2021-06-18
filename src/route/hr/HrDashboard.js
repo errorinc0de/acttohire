@@ -12,6 +12,7 @@ import '../student/styles/awards.css'
 import '../student/styles/Common.css'
 import '../college/styles/collegedashboard.css'
 import NothingToShow from '../../components/NothingToShow'
+import {Link} from 'react-router-dom'
 
 function HrDashboard() {
   const { currentUser } = useAuth()
@@ -106,7 +107,7 @@ function HrDashboard() {
                         <h6 className="my-2">Job Title: {request.jobTitle} </h6>
                         <h6 className="my-2">Job Code: {request.jobCode} </h6>
                         <div className="buttons mx-auto py-2">
-                          <Button onClick={()=>history.push(`/profile/${request.applicant.id}`)} className="button-view-profile mx-2">View Profile <FontAwesomeIcon icon={faUser}/></Button>
+                          <Link to={`/profile/${request.applicant.id}`} className="btn btn-primary  text-light button-view-profile mx-2">View Profile <FontAwesomeIcon icon={faUser}/></Link>
                           <Button onClick={()=>{acceptRequest(request.jobId,request.applicant,key)}} className="button-accept-profile mx-2">Accept <FontAwesomeIcon icon={faCheck} /></Button>
                           <Button onClick={()=>{declineRequest(request.jobId,request.applicant,key)}} className="button-decline-profile mx-2">Reject <FontAwesomeIcon icon={faTimes} /></Button>
                         </div>

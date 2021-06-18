@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthProvider'
 import { db, firebasevalue } from '../../firebase'
 import Sidebar from './components/Sidebar'
 import '../student/styles/jobDetails.css'
+import { ToastContainer, toast } from 'react-toastify';
 
 function College_JobDet() {
     const {jobid} = useParams()
@@ -67,12 +68,34 @@ function College_JobDet() {
     function sendNotification()
     {
 
-        db.collection("users").where("collegeUid","==",currentUser.uid).update({
-            notification : firebasevalue.arrayUnion({
-                jobId:jobid,
-                jobTitle:jobDetails.title
-            })
+        db.collection("users").where("collegeUid","==",currentUser.uid).get().then((docs)=>{
+
+            if(!docs.empty)
+            {
+                docs.forEach((doc)=>{
+                    if(doc.data()?.isHired !== true)
+                    {
+                        db.collection("users").doc(doc.id).update({
+                            notification : firebasevalue.arrayUnion({
+                                jobId:jobid,
+                                jobTitle:jobDetails.title
+                            })
+                        })
+                    }
+                })
+            }
         })
+
+
+        toast.success('Notification sent to all students', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
 
     }
 
@@ -120,6 +143,17 @@ function College_JobDet() {
                     </div>
                     </Col>
                 </Row>
+                <ToastContainer
+                  position="bottom-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  />
             </Container>
         )}
         </>

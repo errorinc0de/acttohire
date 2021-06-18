@@ -30,6 +30,10 @@ import { useParams } from 'react-router'
     const [topics , setTopics] = useState(null)
     const [selectedTopic ,setSelectedTopic] = useState(null)
     const [currentprofile ,setCurrentProfile] = useState()
+    const [yearFilters,setYearFilters] = useState()
+    const [selectedYear,setSelectedYear] = useState()
+    const [yearData,setYearData] = useState(null)
+
 
     const fileRef =useRef()
 
@@ -309,6 +313,78 @@ import { useParams } from 'react-router'
     }
 
 
+
+    useEffect(() => {
+      if(currentprofile && currentprofile.uid)
+      {
+        setYearFilters([parseInt(currentprofile.gradDate.substring(0,4))-3,parseInt(currentprofile.gradDate.substring(0,4))-2,parseInt(currentprofile.gradDate.substring(0,4))-1,parseInt(currentprofile.gradDate.substring(0,4))])
+        var dt = new Date();
+        var year = dt.getFullYear();
+        setSelectedYear(year)
+      }
+    }, [currentprofile])
+
+
+    useEffect(() => {
+
+      if(currentprofile)
+      {
+        var unsubscribe = db.collection("posts").where("author.uid","==",currentprofile.uid).onSnapshot((docs)=>{ 
+
+          var topicsList = currentprofile.topicList
+  
+          var dataset=[]
+  
+          var bgcolor = [
+            'rgb(20,36,89)',
+            'rgb(255,8,80)',
+            'rgb(239,126,50)',
+            'rgb(192,35,35)',
+            'rgb(25,169,121)',
+            'rgb(255,204,0)',
+            'rgb(239,139,44)',
+            'rgb(162,184,108)',
+            'rgb(2,163,139)',
+            'rgb(163, 2, 96)',
+          ]
+  
+          topicsList.forEach((topic)=>{
+            var data = new Array(12).fill(0)
+  
+            for (var month = 1 ; month <= 12 ; month++)
+            {
+                docs.forEach((doc)=>{
+                  var docMonth =doc.data().addedOn.toDate().getMonth()
+                  var docYear =doc.data().addedOn.toDate().getFullYear()
+                  if(docMonth === month && doc.data().topic ===topic && docYear===selectedYear) 
+                  {
+                    data[month-1] += 1
+                  }
+                })
+            }
+            const index = Math.floor(Math.random()*bgcolor.length);
+  
+            dataset.push({label:topic,data:data,backgroundColor:bgcolor[index]})
+  
+              bgcolor.splice(index, 1);
+            
+  
+          })
+  
+          const data = {
+            labels: ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"],
+            datasets: dataset
+          };
+    
+          setYearData(data)
+  
+        })
+      }
+      return unsubscribe
+
+    }, [selectedYear , currentprofile])
+
+
     useEffect(() => {
         var unsubscribe = db.collection("users").doc(profileid).onSnapshot((profile)=>{
             if(profile.exists)
@@ -341,9 +417,7 @@ import { useParams } from 'react-router'
      return ( 
         <Container fluid className="dashboard-body">
           <Row noGutters>
-            <Col lg={1} className="p-0">
-            </Col>
-            <Col lg={11} className="m-body">
+            <Col lg={12} className="m-body">
                 <div className="page-header">
                    Profile
                 </div>
@@ -371,20 +445,47 @@ import { useParams } from 'react-router'
                             <p>{profile && profile.bio}</p>
                         </div>
 
-                        <Row className="d-flex align-items-center justify-content-center">
-                            <Col lg={12} className="stats-container">
-                                <h3>Monthly chat</h3>
-                                <Bar data={monthlyData} options={options}  className="monthly-chat" />
-                            </Col>
-                            <Col lg={4} className="stats-container">
-                                <h3>Topic Chart</h3>
-                                <Pie data={data} className="pie-chart" options={pieoptions} />
-                            </Col>
-                            <Col lg={4} className="stats-container">
-                                <h3>Award/Achievement Chart</h3>
-                                <Pie data={awards} className="pie-chart"options={pieoptions} />
-                            </Col>
-                        </Row>
+                        <Row>
+                        <Col lg={12} className="stats-container">
+                            <h3>Year chart</h3>
+                            <Form.Label>Year Filter</Form.Label>
+                            <div className="ml-1">
+                                {yearFilters && yearFilters.length>0 && yearFilters.map((year,key)=>{
+                                    return(
+                                    <Button variant="light" className={selectedYear === year?("styled-radio styled-radio-selected mr-2"):("styled-radio mr-3")} key={key} onClick={()=>{setSelectedYear(year)}}>
+                                        {year}
+                                    </Button>
+                                    )
+                                })}
+                            </div>
+                        </Col>
+
+                        <Col lg={12} className="monthly-chat">
+                            <Bar data={yearData} options={options}/>
+                        </Col>
+                      
+
+                        <Col lg={12} className="stats-container">
+                            <h3>Monthly chart</h3>
+                        </Col>
+                        <Col lg={12} className="monthly-chat">
+                        <Bar data={monthlyData} options={options} />
+                        </Col>
+
+                        <Col lg={6} className="stats-container">
+                            <h3>Topic Chart</h3>
+                            <div className="pie-chart">
+                              <Pie data={data} options={pieoptions} />
+                            </div>
+                            
+                        </Col>
+                        <Col lg={6} className="stats-container">
+                            <h3>Award/Achievement Chart</h3>
+                            <div className="pie-chart">
+                              <Pie data={awards} options={pieoptions} />
+                            </div>
+                        </Col>
+                    </Row>
 
                         <Tabs defaultActiveKey="awards" id="uncontrolled-tab-example">
                         <Tab eventKey="awards" title="Awards / Achievements">
